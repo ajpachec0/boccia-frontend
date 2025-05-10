@@ -1,4 +1,5 @@
 // auth.ts
+import { api } from "@/config/axios-config";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -12,31 +13,29 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       async authorize(creds) {
         // 1) Modo desarrollo: credenciales mock
-        if (
-          process.env.NODE_ENV === "development" &&
-          creds?.email === "demo@boccia.com" &&
-          creds?.password === "demo123"
-        ) {
-          return {
-            id: "demo-id",
-            name: "Usuario Demo",
-            email: "demo@boccia.com",
-            accessToken: "fake-demo-token",
-          };
-        }
+        // if (
+        //   process.env.NODE_ENV === "development" &&
+        //   creds?.email === "demo@boccia.com" &&
+        //   creds?.password === "demo123"
+        // ) {
+        //   return {
+        //     id: "demo-id",
+        //     name: "Usuario Demo",
+        //     email: "demo@boccia.com",
+        //     accessToken: "fake-demo-token",
+        //   };
+        // }
 
         // 2) Producción (o cuando tu API esté arriba): llama al endpoint real
         try {
-          const res = await fetch("http://localhost:8080/api/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: creds?.email,
-              password: creds?.password,
-            }),
+          const res = await api.post(`${process.env.API_URL}/auth/login`, {
+            email: creds?.email,
+            password: creds?.password,
           });
-          const data = await res.json();
-          if (res.ok && data.token) {
+
+          // Si la respuesta es exitosa, devuelve el usuario
+          if (res.status === 200) {
+            const data = res.data;
             return {
               id: data.username,
               name: data.username,
@@ -44,8 +43,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               accessToken: data.token,
             };
           }
+          // const data = await res.json();
+
+          // if (res.ok && data.token) {
+          //   return {
+          //     id: data.username,
+          //     name: data.username,
+          //     email: data.email,
+          //     accessToken: data.token,
+          //   };
+          // }
         } catch (err) {
-          console.error("Error al llamar al login real:", err);
+          console.error("Error al iniciar sesión:", err);
+          // Manejo de errores: si la API no responde o hay un error, rechaza
+          // el inicio de sesión
         }
 
         // 3) Si nada coincide, rechaza

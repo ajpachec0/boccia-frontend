@@ -1,14 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
-import {
-  Calendar,
-  MapPin,
-  ChevronRight,
-  BarChart3,
-  PlayCircle,
-  Clock,
-  FileText,
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,139 +8,180 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
+import {
+  BarChart3,
+  Calendar,
+  ChevronRight,
+  Clock,
+  FileText,
+  Info,
+  MapPin,
+  PlayCircle,
+  Trophy,
+  Users,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function DashboardTournamentCategories() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 px-8 p2-4">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center">
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="text-primary">Eventos</span>
-            <span className="text-muted-foreground text-sm">›</span>
-            <span className="text-muted-foreground text-sm">Evento</span>
-            <span className="text-muted-foreground text-sm">›</span>
-            <span className="text-muted-foreground text-sm">
-              El Salvador 2025 World Boccia Challenger
-            </span>
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
+      {/* Header con información del evento */}
+      <div className="bg-primary text-primary-foreground">
+        <div className="container mx-auto py-8 px-4">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <div className="flex items-center gap-2 text-primary-foreground/80 mb-2">
+                <Calendar className="h-4 w-4" />
+                <span>6th Octubre 2024</span>
+              </div>
+              <h1 className="text-3xl font-bold">
+                Cali 2024 World Boccia Challenger
+              </h1>
+              <div className="flex items-center gap-2 mt-2">
+                <MapPin className="h-4 w-4" />
+                <span>Cali, Colombia</span>
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <Clock className="h-4 w-4" />
+                <span>Calendario</span>
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <PlayCircle className="h-4 w-4" />
+                <span>En vivo</span>
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <BarChart3 className="h-4 w-4" />
+                <span>Ranking</span>
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                <span>Reporte</span>
+              </Button>
+            </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <div className="container mx-auto py-6 px-4 max-w-screen-2xl">
-        <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] gap-6">
-          {/* Sidebar */}
-          <div className="space-y-6">
-            {/* Event Info Card */}
-            <Card className="overflow-hidden">
-              <div className="bg-primary/10 p-4 text-center">
-                <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground mb-2">
-                  <Calendar className="h-4 w-4" />
-                  <span>20 de Junio 2025</span>
-                </div>
+      {/* Estadísticas del torneo */}
+      <div className="container mx-auto py-6 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <Trophy className="h-6 w-6" />
               </div>
-              <CardHeader className="text-center pb-2">
-                <CardTitle className="text-2xl">
-                  San Salvador 2025 World Boccia Challenger
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center pb-6">
-                <div className="flex items-center justify-center gap-2 text-muted-foreground">
-                  <MapPin className="h-4 w-4" />
-                  <span>San Salvador, El Salvador</span>
-                </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Categorías</p>
+                <p className="text-2xl font-bold">8</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <Users className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Participantes</p>
+                <p className="text-2xl font-bold">42</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <MapPin className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Países</p>
+                <p className="text-2xl font-bold">12</p>
+              </div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="p-4 flex items-center gap-4">
+              <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <Calendar className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground">Partidos</p>
+                <p className="text-2xl font-bold">64</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
-                <div className="grid grid-cols-2 gap-3 mt-6">
-                  <Button variant="default" className="flex items-center gap-2">
-                    <Clock className="h-4 w-4" />
-                    <span>Calendario</span>
-                  </Button>
-                  <Button variant="default" className="flex items-center gap-2">
-                    <PlayCircle className="h-4 w-4" />
-                    <span>En vivo</span>
-                  </Button>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <BarChart3 className="h-4 w-4" />
-                    <span>Ranking</span>
-                  </Button>
-                  <Button variant="outline" className="flex items-center gap-2">
-                    <FileText className="h-4 w-4" />
-                    <span>Reporte</span>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* QR Code Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  Escanea para acceso móvil
-                </CardTitle>
-                <CardDescription>
-                  Accede rápidamente desde tu dispositivo
-                </CardDescription>
+        {/* Contenido principal con pestañas */}
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-6">
+          {/* Sidebar con QR e información */}
+          <div className="space-y-6">
+            <Card className="overflow-hidden">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg">Acceso móvil</CardTitle>
+                <CardDescription>Escanea el código QR</CardDescription>
               </CardHeader>
               <CardContent className="flex justify-center pb-6">
                 <div className="border p-3 rounded-lg bg-white">
                   <Image
                     src="/qrcode-test.svg"
                     alt="QR Code"
-                    width={200}
-                    height={200}
-                    className="h-[200px] w-[200px]"
+                    width={160}
+                    height={160}
+                    className="h-[160px] w-[160px]"
                   />
                 </div>
               </CardContent>
             </Card>
 
-            {/* Tournament Stats Card */}
-            {/* <Card>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">
-                  Estadísticas del torneo
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Categorías</span>
-                    <Badge variant="outline">8</Badge>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Participantes</span>
-                    <Badge variant="outline">42</Badge>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Países</span>
-                    <Badge variant="outline">12</Badge>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm">Partidos programados</span>
-                    <Badge variant="outline">64</Badge>
-                  </div>
-                </div>
-              </CardContent>
-            </Card> */}
+            <div className="bg-muted/40 p-4 rounded-lg">
+              <h3 className="font-medium mb-3 flex items-center gap-2">
+                <Info className="h-4 w-4" />
+                <span>Información del evento</span>
+              </h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                El Cali 2024 World Boccia Challenger es un evento internacional
+                que reúne a los mejores atletas de boccia de todo el mundo en
+                diferentes categorías.
+              </p>
+            </div>
           </div>
 
-          {/* Main Content */}
-          <div className="space-y-6">
+          {/* Contenido principal */}
+          <div>
             <Tabs defaultValue="individuals" className="w-full">
-              <div className="border-b">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-4">
-                  <TabsList className="h-9 w-full sm:w-auto mb-4 sm:mb-0">
-                    <TabsTrigger value="individuals" className="text-sm">
-                      Individuales
-                    </TabsTrigger>
-                    <TabsTrigger value="teams" className="text-sm">
-                      Parejas / Equipos
-                    </TabsTrigger>
+              <div className="flex items-center justify-between mb-6">
+                <div className="">
+                  <TabsList>
+                    <TabsTrigger value="individuals">Individuales</TabsTrigger>
+                    <TabsTrigger value="teams">Parejas / Equipos</TabsTrigger>
                   </TabsList>
                 </div>
               </div>
 
-              <TabsContent value="individuals" className="mt-6">
+              <TabsContent
+                value="individuals"
+                className="mt-0"
+                id="individuals"
+              >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {categories.map((category) => (
                     <Link
@@ -159,6 +190,7 @@ export default function DashboardTournamentCategories() {
                       className="transition-all hover:scale-[1.01] focus:scale-[1.01] focus:outline-none"
                     >
                       <Card className="overflow-hidden h-full border hover:border-primary/50 transition-colors">
+                        <div className={`h-1 bg-amber-500`}></div>
                         <CardHeader className="pb-2 flex flex-row items-start justify-between">
                           <div>
                             <CardDescription className="text-xs font-medium text-primary/80 uppercase tracking-wide">
@@ -197,14 +229,14 @@ export default function DashboardTournamentCategories() {
                               </Badge>
                             )}
                           </div>
-                          {/* {category.progress > 0 && (
+                          {category.progress > 0 && (
                             <div className="mt-4 h-1.5 w-full bg-muted overflow-hidden rounded-full">
                               <div
                                 className="h-full bg-primary"
                                 style={{ width: `${category.progress}%` }}
                               ></div>
                             </div>
-                          )} */}
+                          )}
                         </CardContent>
                       </Card>
                     </Link>
@@ -212,7 +244,7 @@ export default function DashboardTournamentCategories() {
                 </div>
               </TabsContent>
 
-              <TabsContent value="teams" className="mt-6">
+              <TabsContent value="teams" className="mt-0" id="teams">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {teamCategories.map((category) => (
                     <Link
@@ -221,6 +253,11 @@ export default function DashboardTournamentCategories() {
                       className="transition-all hover:scale-[1.01] focus:scale-[1.01] focus:outline-none"
                     >
                       <Card className="overflow-hidden h-full border hover:border-primary/50 transition-colors">
+                        <div
+                          className={`h-1 ${getCategoryStatusColor(
+                            category.status
+                          )}`}
+                        ></div>
                         <CardHeader className="pb-2 flex flex-row items-start justify-between">
                           <div>
                             <CardDescription className="text-xs font-medium text-primary/80 uppercase tracking-wide">
@@ -257,14 +294,14 @@ export default function DashboardTournamentCategories() {
                               </Badge>
                             )}
                           </div>
-                          {/* {category.progress > 0 && (
+                          {category.progress > 0 && (
                             <div className="mt-4 h-1.5 w-full bg-muted overflow-hidden rounded-full">
                               <div
                                 className="h-full bg-primary"
                                 style={{ width: `${category.progress}%` }}
                               ></div>
                             </div>
-                          )} */}
+                          )}
                         </CardContent>
                       </Card>
                     </Link>
@@ -275,8 +312,31 @@ export default function DashboardTournamentCategories() {
           </div>
         </div>
       </div>
+
+      <footer className="border-t py-4 bg-background mt-12">
+        <div className="container text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} Sistema de Torneos. Todos los derechos
+          reservados.
+        </div>
+      </footer>
     </div>
   );
+}
+
+// Función para determinar el color de la barra de estado
+function getCategoryStatusColor(status: string | undefined) {
+  if (!status) return "bg-muted";
+
+  switch (status) {
+    case "En curso":
+      return "bg-green-500";
+    case "Próximo":
+      return "bg-blue-500";
+    case "Pendiente":
+      return "bg-amber-500";
+    default:
+      return "bg-muted";
+  }
 }
 
 const categories = [

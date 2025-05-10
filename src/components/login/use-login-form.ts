@@ -32,7 +32,7 @@ export const useLoginForm = () => {
       toast.error("Credenciales inválidas");
     } else {
       toast.success("Inicio de sesión exitoso");
-      router.push("/");
+      router.push("/eventos");
     }
   };
   return {
