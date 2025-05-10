@@ -2,7 +2,7 @@ import { api } from "@/config/axios-config";
 
 export const getCategoriesByEvent = async (eventId: string) => {
   const res = await api
-    .get(`/categorias/evento/${eventId}`)
+    .get(`evento-categoria/evento/${eventId}/categorias`)
     .then((response) => response.data)
     .catch((error) => {
       console.error("Error fetching categories by event:", error);

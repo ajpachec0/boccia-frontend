@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
+  ArrowLeft,
   BarChart3,
   Calendar,
   ChevronRight,
@@ -23,24 +24,53 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export default function DashboardTournamentCategories() {
+interface Props {
+  categories: {
+    id: string;
+    name: string;
+    entrants?: number;
+    status?: string;
+  }[];
+  eventInfo: {
+    id: number;
+    fechaInicio: string;
+    fechaFin: string;
+    nombre: string;
+    lugar: string;
+    pais: string;
+    descripcion: string;
+  };
+}
+
+export default function DashboardTournamentCategories({
+  categories,
+  eventInfo,
+}: Props) {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Header con información del evento */}
       <div className="bg-primary text-primary-foreground">
         <div className="container mx-auto py-8 px-4">
+          <Link href={"/eventos"}>
+            <Button variant={"secondary"} className="mb-4 ">
+              <ArrowLeft className="h-4 w-4" />
+              <span className="text-sm">Regresar a eventos</span>
+            </Button>
+          </Link>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
               <div className="flex items-center gap-2 text-primary-foreground/80 mb-2">
                 <Calendar className="h-4 w-4" />
-                <span>6th Octubre 2024</span>
+                <span>
+                  {eventInfo?.fechaInicio} - {eventInfo?.fechaFin}
+                </span>
               </div>
-              <h1 className="text-3xl font-bold">
-                Cali 2024 World Boccia Challenger
-              </h1>
+              <h1 className="text-3xl font-bold">{eventInfo?.nombre}</h1>
               <div className="flex items-center gap-2 mt-2">
                 <MapPin className="h-4 w-4" />
-                <span>Cali, Colombia</span>
+                <span>
+                  {eventInfo?.lugar}, {eventInfo?.pais}
+                </span>
               </div>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -91,7 +121,7 @@ export default function DashboardTournamentCategories() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Categorías</p>
-                <p className="text-2xl font-bold">8</p>
+                <p className="text-2xl font-bold">{categories?.length}</p>
               </div>
             </CardContent>
           </Card>
@@ -102,7 +132,10 @@ export default function DashboardTournamentCategories() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Participantes</p>
-                <p className="text-2xl font-bold">42</p>
+                <p className="text-2xl font-bold">
+                  {/* get random number 10 - 100 */}
+                  {Math.floor(Math.random() * (100 - 10 + 1)) + 10}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -113,7 +146,10 @@ export default function DashboardTournamentCategories() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Países</p>
-                <p className="text-2xl font-bold">12</p>
+                <p className="text-2xl font-bold">
+                  {/* get random number 1 - 20 */}
+                  {Math.floor(Math.random() * (20 - 1 + 1)) + 1}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -124,7 +160,10 @@ export default function DashboardTournamentCategories() {
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Partidos</p>
-                <p className="text-2xl font-bold">64</p>
+                <p className="text-2xl font-bold">
+                  {/* get random number 10 - 100 */}
+                  {Math.floor(Math.random() * (100 - 10 + 1)) + 10}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -158,9 +197,7 @@ export default function DashboardTournamentCategories() {
                 <span>Información del evento</span>
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                El Cali 2024 World Boccia Challenger es un evento internacional
-                que reúne a los mejores atletas de boccia de todo el mundo en
-                diferentes categorías.
+                {eventInfo?.descripcion}
               </p>
             </div>
           </div>
@@ -172,7 +209,7 @@ export default function DashboardTournamentCategories() {
                 <div className="">
                   <TabsList>
                     <TabsTrigger value="individuals">Individuales</TabsTrigger>
-                    <TabsTrigger value="teams">Parejas / Equipos</TabsTrigger>
+                    {/* <TabsTrigger value="teams">Parejas / Equipos</TabsTrigger> */}
                   </TabsList>
                 </div>
               </div>
@@ -183,10 +220,10 @@ export default function DashboardTournamentCategories() {
                 id="individuals"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {categories.map((category) => (
+                  {categories?.map((category) => (
                     <Link
                       key={category.id}
-                      href={`/category/${category.id}`}
+                      href={`/eventos/${eventInfo.id}/category/${category.id}`}
                       className="transition-all hover:scale-[1.01] focus:scale-[1.01] focus:outline-none"
                     >
                       <Card className="overflow-hidden h-full border hover:border-primary/50 transition-colors">
@@ -229,14 +266,6 @@ export default function DashboardTournamentCategories() {
                               </Badge>
                             )}
                           </div>
-                          {category.progress > 0 && (
-                            <div className="mt-4 h-1.5 w-full bg-muted overflow-hidden rounded-full">
-                              <div
-                                className="h-full bg-primary"
-                                style={{ width: `${category.progress}%` }}
-                              ></div>
-                            </div>
-                          )}
                         </CardContent>
                       </Card>
                     </Link>
@@ -244,7 +273,7 @@ export default function DashboardTournamentCategories() {
                 </div>
               </TabsContent>
 
-              <TabsContent value="teams" className="mt-0" id="teams">
+              {/* <TabsContent value="teams" className="mt-0" id="teams">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {teamCategories.map((category) => (
                     <Link
@@ -307,14 +336,14 @@ export default function DashboardTournamentCategories() {
                     </Link>
                   ))}
                 </div>
-              </TabsContent>
+              </TabsContent> */}
             </Tabs>
           </div>
         </div>
       </div>
 
       <footer className="border-t py-4 bg-background mt-12">
-        <div className="container text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Sistema de Torneos. Todos los derechos
           reservados.
         </div>
@@ -324,100 +353,100 @@ export default function DashboardTournamentCategories() {
 }
 
 // Función para determinar el color de la barra de estado
-function getCategoryStatusColor(status: string | undefined) {
-  if (!status) return "bg-muted";
+// function getCategoryStatusColor(status: string | undefined) {
+//   if (!status) return "bg-muted";
 
-  switch (status) {
-    case "En curso":
-      return "bg-green-500";
-    case "Próximo":
-      return "bg-blue-500";
-    case "Pendiente":
-      return "bg-amber-500";
-    default:
-      return "bg-muted";
-  }
-}
+//   switch (status) {
+//     case "En curso":
+//       return "bg-green-500";
+//     case "Próximo":
+//       return "bg-blue-500";
+//     case "Pendiente":
+//       return "bg-amber-500";
+//     default:
+//       return "bg-muted";
+//   }
+// }
 
-const categories = [
-  {
-    id: "bc1-female",
-    name: "BC1 Femenino",
-    entrants: 2,
-    status: "En curso",
-    progress: 75,
-  },
-  {
-    id: "bc1-male",
-    name: "BC1 Masculino",
-    entrants: 5,
-    status: "En curso",
-    progress: 60,
-  },
-  {
-    id: "bc2-female",
-    name: "BC2 Femenino",
-    entrants: 5,
-    status: "Próximo",
-    progress: 25,
-  },
-  {
-    id: "bc2-male",
-    name: "BC2 Masculino",
-    entrants: 7,
-    status: "Próximo",
-    progress: 10,
-  },
-  {
-    id: "bc3-female",
-    name: "BC3 Femenino",
-    entrants: 5,
-    status: "Pendiente",
-    progress: 0,
-  },
-  {
-    id: "bc3-male",
-    name: "BC3 Masculino",
-    entrants: 5,
-    status: "Pendiente",
-    progress: 0,
-  },
-  {
-    id: "bc4-female",
-    name: "BC4 Femenino",
-    entrants: 5,
-    status: "Pendiente",
-    progress: 0,
-  },
-  {
-    id: "bc4-male",
-    name: "BC4 Masculino",
-    entrants: 8,
-    status: "Pendiente",
-    progress: 0,
-  },
-];
+// const categories = [
+//   {
+//     id: "bc1-female",
+//     name: "BC1 Femenino",
+//     entrants: 2,
+//     status: "En curso",
+//     progress: 75,
+//   },
+//   {
+//     id: "bc1-male",
+//     name: "BC1 Masculino",
+//     entrants: 5,
+//     status: "En curso",
+//     progress: 60,
+//   },
+//   {
+//     id: "bc2-female",
+//     name: "BC2 Femenino",
+//     entrants: 5,
+//     status: "Próximo",
+//     progress: 25,
+//   },
+//   {
+//     id: "bc2-male",
+//     name: "BC2 Masculino",
+//     entrants: 7,
+//     status: "Próximo",
+//     progress: 10,
+//   },
+//   {
+//     id: "bc3-female",
+//     name: "BC3 Femenino",
+//     entrants: 5,
+//     status: "Pendiente",
+//     progress: 0,
+//   },
+//   {
+//     id: "bc3-male",
+//     name: "BC3 Masculino",
+//     entrants: 5,
+//     status: "Pendiente",
+//     progress: 0,
+//   },
+//   {
+//     id: "bc4-female",
+//     name: "BC4 Femenino",
+//     entrants: 5,
+//     status: "Pendiente",
+//     progress: 0,
+//   },
+//   {
+//     id: "bc4-male",
+//     name: "BC4 Masculino",
+//     entrants: 8,
+//     status: "Pendiente",
+//     progress: 0,
+//   },
+// ];
 
-const teamCategories = [
-  {
-    id: "bc1-bc2-mixed",
-    name: "BC1/BC2 Mixto",
-    entrants: 4,
-    status: "En curso",
-    progress: 50,
-  },
-  {
-    id: "bc3-mixed",
-    name: "BC3 Mixto",
-    entrants: 6,
-    status: "Próximo",
-    progress: 0,
-  },
-  {
-    id: "bc4-mixed",
-    name: "BC4 Mixto",
-    entrants: 3,
-    status: "Pendiente",
-    progress: 0,
-  },
-];
+// const teamCategories = [
+//   {
+//     id: "bc1-bc2-mixed",
+//     name: "BC1/BC2 Mixto",
+//     entrants: 4,
+//     status: "En curso",
+//     progress: 50,
+//   },
+//   {
+//     id: "bc3-mixed",
+//     name: "BC3 Mixto",
+//     entrants: 6,
+//     status: "Próximo",
+//     progress: 0,
+//   },
+//   {
+//     id: "bc4-mixed",
+//     name: "BC4 Mixto",
+//     entrants: 3,
+//     status: "Pendiente",
+//     progress: 0,
+//   },
+// ];

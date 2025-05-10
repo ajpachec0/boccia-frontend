@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { ArrowRight, Eye, EyeOff, Lock, User } from "lucide-react";
 import React from "react";
 import { useLoginForm } from "./use-login-form";
+import Image from "next/image";
 
 export const LoginForm = () => {
   const {
@@ -27,13 +28,25 @@ export const LoginForm = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 flex flex-col">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      {/* <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 max-w-screen-2xl items-center">
           <span className="text-primary ml-2">Sistema de Torneos</span>
         </div>
-      </header>
+      </header> */}
 
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex flex-col items-center justify-center p-4">
+        <div className="my-4 flex flex-col items-center ">
+          <Image
+            src="/logo-bocciasv.png"
+            alt="Logo"
+            width={150}
+            height={28}
+            className="mb-4"
+          />
+          <h1 className="text-primary ml-2 text-4xl font-bold mb-4          ">
+            Sistema de Torneos
+          </h1>
+        </div>
         <Card className="w-full max-w-md border-2">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-center">
@@ -122,7 +135,7 @@ export const LoginForm = () => {
       </main>
 
       <footer className="border-t py-4 bg-background">
-        <div className="container text-center text-sm text-muted-foreground">
+        <div className="text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} Sistema de Torneos. Todos los derechos
           reservados.
         </div>
