@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const ENDS = 6;
+// const ENDS = 6;
 const BALLS_PER_END = 6;
 const POLL_INTERVAL_MS = 1000;
 
