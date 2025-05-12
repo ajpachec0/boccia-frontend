@@ -111,38 +111,83 @@ export default function EventoContainer({ eventos, categoriesOptions }: Props) {
           </TabsList>
 
           <TabsContent value="upcoming" className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {upcomingEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  formatDate={formatDate}
-                />
-              ))}
+            <div className="mt-8">
+              {upcomingEvents.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {upcomingEvents.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      formatDate={formatDate}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-muted/30 rounded-lg">
+                  <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                  <h3 className="text-xl font-medium mb-2">
+                    No hay eventos próximos
+                  </h3>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    Actualmente no hay eventos programados para el futuro.
+                    Vuelve a consultar más tarde o crea un nuevo evento.
+                  </p>
+                </div>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="ongoing" className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {ongoingEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  formatDate={formatDate}
-                />
-              ))}
+            <div className="mt-8">
+              {ongoingEvents.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {ongoingEvents.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      formatDate={formatDate}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-muted/30 rounded-lg">
+                  <Trophy className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                  <h3 className="text-xl font-medium mb-2">
+                    No hay eventos en curso
+                  </h3>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    En este momento no hay competiciones activas. Consulta los
+                    eventos próximos o pasados.
+                  </p>
+                </div>
+              )}
             </div>
           </TabsContent>
 
           <TabsContent value="past" className="mt-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {pastEvents.map((event) => (
-                <EventCard
-                  key={event.id}
-                  event={event}
-                  formatDate={formatDate}
-                />
-              ))}
+            <div className="mt-8">
+              {pastEvents.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {pastEvents.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      event={event}
+                      formatDate={formatDate}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-12 bg-muted/30 rounded-lg">
+                  <Calendar className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
+                  <h3 className="text-xl font-medium mb-2">
+                    No hay eventos pasados
+                  </h3>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    No se encontraron registros de eventos anteriores. Los
+                    eventos completados aparecerán aquí.
+                  </p>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>
