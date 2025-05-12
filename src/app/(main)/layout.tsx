@@ -1,7 +1,6 @@
 // app/(protected)/layout.tsx
+import Providers from "@/components/layout/session-provider";
 import { ReactNode } from "react";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -10,8 +9,5 @@ export default async function ProtectedLayout({
 }: {
   children: ReactNode;
 }) {
-  const session = await auth();
-  if (!session) redirect("/login");
-
-  return <>{children}</>;
+  return <Providers>{children}</Providers>;
 }

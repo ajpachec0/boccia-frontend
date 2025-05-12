@@ -6,3 +6,8 @@ export default auth((req) => {
     return Response.redirect(newUrl);
   }
 });
+
+// See "Matching Paths" below to learn more
+export const config = {
+  matcher: ["/eventos/:path*", "/scoreboard/:path*", "/category/:path*"],
+};

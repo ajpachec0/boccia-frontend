@@ -11,6 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Correo", type: "email" },
         password: { label: "Contraseña", type: "password" },
       },
+
       async authorize(creds) {
         // 1) Modo desarrollo: credenciales mock
         // if (
@@ -80,12 +81,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       session.user = {
         ...session.user,
-        accessToken: token.accessToken as string,
+        // accessToken: token.accessToken as string,
       };
       return session;
-    },
-    authorized: async ({ auth }) => {
-      return !!auth;
     },
   },
 
