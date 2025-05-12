@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { EventResponse } from "@/server/events/get-event-by-id";
 import {
   ArrowLeft,
   BarChart3,
@@ -31,15 +32,7 @@ interface Props {
     entrants?: number;
     status?: string;
   }[];
-  eventInfo: {
-    id: number;
-    fechaInicio: string;
-    fechaFin: string;
-    nombre: string;
-    lugar: string;
-    pais: string;
-    descripcion: string;
-  };
+  eventInfo: EventResponse;
 }
 
 export default function DashboardTournamentCategories({
@@ -49,7 +42,7 @@ export default function DashboardTournamentCategories({
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       {/* Header con información del evento */}
-      <div className="bg-primary text-primary-foreground">
+      <div className="bg-primary text-primary-foreground p-4">
         <div className="container mx-auto py-8 px-4">
           <Link href={"/eventos"}>
             <Button variant={"secondary"} className="mb-4 ">
@@ -62,14 +55,18 @@ export default function DashboardTournamentCategories({
               <div className="flex items-center gap-2 text-primary-foreground/80 mb-2">
                 <Calendar className="h-4 w-4" />
                 <span>
-                  {eventInfo?.fechaInicio} - {eventInfo?.fechaFin}
+                  {eventInfo?.evento?.fechaInicio} -{" "}
+                  {eventInfo?.evento?.fechaFin}
                 </span>
               </div>
-              <h1 className="text-3xl font-bold">{eventInfo?.nombre}</h1>
+              <h1 className="text-3xl font-bold">
+                {eventInfo?.evento?.evento}
+              </h1>
               <div className="flex items-center gap-2 mt-2">
                 <MapPin className="h-4 w-4" />
                 <span>
-                  {eventInfo?.lugar}, {eventInfo?.pais}
+                  {eventInfo?.evento?.lugar || "San Salvador"},{" "}
+                  {eventInfo?.evento?.pais || "El Salvador"}
                 </span>
               </div>
             </div>
@@ -197,7 +194,7 @@ export default function DashboardTournamentCategories({
                 <span>Información del evento</span>
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {eventInfo?.descripcion}
+                {eventInfo?.evento.descripcion}
               </p>
             </div>
           </div>
@@ -223,7 +220,7 @@ export default function DashboardTournamentCategories({
                   {categories?.map((category) => (
                     <Link
                       key={category.id}
-                      href={`/eventos/${eventInfo.id}/category/${category.id}`}
+                      href={`/eventos/${eventInfo.evento.id}/category/${category.id}`}
                       className="transition-all hover:scale-[1.01] focus:scale-[1.01] focus:outline-none"
                     >
                       <Card className="overflow-hidden h-full border hover:border-primary/50 transition-colors">

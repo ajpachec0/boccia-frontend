@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
+import { CategoryTabs } from "@/components/category/categort-tabs";
 import { CategoryHeader } from "@/components/category/category-header";
 import { CategoryInfoCard } from "@/components/category/category-infocard";
-import { CategoryTabs } from "@/components/category/categort-tabs";
-import { CategoryEvent } from "@/types/categories-events.type";
+import EmptyCategory from "@/components/common/empty-section";
 import { getGrupoByCategoryByEvent } from "@/server/grupos/get-grupo-by-category-by-event";
+import { getMatchesByGroupByCategoryByEvent } from "@/server/matches/get-matches-by-cateogry-by-event";
+import { CategoryEvent } from "@/types/categories-events.type";
 
 interface Props {
   params: { idcat: string; id: string };
@@ -14,25 +13,25 @@ interface Props {
 export default async function CategoryPage({ params }: Props) {
   const category = getCategoryById(params.idcat) as CategoryEvent | undefined;
   const group = await getGrupoByCategoryByEvent(params.id, params.idcat);
+  const matches = await getMatchesByGroupByCategoryByEvent(
+    params.id,
+    params.idcat,
+    "5"
+  );
 
   if (!category) {
-    return (
-      <div className="container mx-auto py-16 px-4 text-center">
-        <h1 className="text-2xl font-bold mb-4">Categoría no encontrada</h1>
-        <Link href="/eventos">
-          <Button variant="outline" className="mt-4">
-            <ChevronLeft className="mr-2 h-4 w-4" /> Volver al inicio
-          </Button>
-        </Link>
-      </div>
-    );
+    return <EmptyCategory categoryName="esta categoría" />;
   }
 
   return (
     <div className="container mx-auto py-6 px-4 max-w-7xl">
       <CategoryHeader category={category} />
       <CategoryInfoCard category={category} />
-      <CategoryTabs category={category} pools={group} />
+      <CategoryTabs
+        category={category}
+        pools={group}
+        matches={matches} // Pass the matches data to the MatchesTab
+      />
     </div>
   );
 }

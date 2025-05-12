@@ -1,9 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { Calendar, MapPin, ArrowRight, Trophy, Plus } from "lucide-react";
+import { ModalNewEvent } from "@/components/eventos/modal-new-event";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,9 +10,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ModalNewEvent } from "@/components/eventos/modal-new-event";
+import { ArrowRight, Calendar, MapPin, Plus, Trophy } from "lucide-react";
+import { signOut } from "next-auth/react";
+import Image from "next/image";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
 interface Event {
   id: number;
@@ -81,6 +82,14 @@ export default function EventoContainer({ eventos, categoriesOptions }: Props) {
             >
               <Plus className="h-4 w-4" />
               <span>Nuevo evento</span>
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => signOut()}
+              className="flex items-center gap-1"
+            >
+              <span>Cerrar sesión</span>
             </Button>
           </nav>
         </div>

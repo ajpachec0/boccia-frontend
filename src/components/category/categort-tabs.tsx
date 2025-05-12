@@ -1,15 +1,16 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabTableClasification } from "@/components/category/tab-table-clasification";
 import { ApiPool, PoolsTab } from "./pools-tab";
-import { MatchesTab } from "./matches-tab";
+import { ApiMatch, MatchesTab } from "./matches-tab";
 import { CategoryEvent } from "@/types/categories-events.type";
 
 interface Props {
   category: CategoryEvent;
   pools: ApiPool[];
+  matches: ApiMatch[];
 }
 
-export function CategoryTabs({ category, pools }: Props) {
+export function CategoryTabs({ category, pools, matches }: Props) {
   return (
     <Tabs defaultValue="bracket" className="mb-8">
       <TabsList className="grid grid-cols-3 w-full max-w-md">
@@ -25,7 +26,10 @@ export function CategoryTabs({ category, pools }: Props) {
         <PoolsTab pools={pools} />
       </TabsContent>
       <TabsContent value="matches" className="mt-6">
-        <MatchesTab rounds={category.rounds} />
+        <MatchesTab
+          matches={matches}
+          // matches={matches}
+        />
       </TabsContent>
     </Tabs>
   );

@@ -1,9 +1,15 @@
 import { ScoreboardPageComponent } from "@/components/scoreboard/scoreboard-puntuation";
 
-export default async function ScoreboardPage() {
+interface Props {
+  params: {
+    id: string;
+  };
+}
+
+export default async function ScoreboardPage({ params }: Props) {
   return (
     <>
-      <ScoreboardPageComponent />
+      <ScoreboardPageComponent id={params.id} />
     </>
   );
 }
