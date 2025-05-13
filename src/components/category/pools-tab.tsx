@@ -1,6 +1,9 @@
 // components/category/PoolsTab.tsx
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import EmptyCategory from "../common/empty-section";
 
 interface ApiCountry {
   fotoPais: string;
@@ -29,9 +32,11 @@ export interface ApiPool {
 
 interface Props {
   pools: ApiPool[];
+  eventId: string;
+  categoryId: string;
 }
 
-export function PoolsTab({ pools }: Props) {
+export function PoolsTab({ pools, categoryId, eventId }: Props) {
   // Valores por defecto para stats
   const defaultStats = {
     wins: 0,
@@ -110,10 +115,21 @@ export function PoolsTab({ pools }: Props) {
     },
   };
 
+  if (pools.length === 0) {
+    return <EmptyCategory categoryName="Grupos" />;
+  }
+
   return (
     <>
       {pools.map((pool) => (
         <Card key={pool.id} className="mb-8">
+          <div className="px-4 pt-4 flex justify-end">
+            <Link
+              href={`/category/${categoryId}/${eventId}/group/${pool.id}/matches`}
+            >
+              <Button size="sm">Ver partidos</Button>
+            </Link>
+          </div>
           <CardHeader className="pb-0">
             <CardTitle className="text-xl">{pool.nombre}</CardTitle>
           </CardHeader>

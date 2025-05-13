@@ -1,36 +1,36 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TabTableClasification } from "@/components/category/tab-table-clasification";
-import { ApiPool, PoolsTab } from "./pools-tab";
-import { ApiMatch, MatchesTab } from "./matches-tab";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { CategoryEvent } from "@/types/categories-events.type";
+import { ApiPool, PoolsTab } from "./pools-tab";
 
 interface Props {
   category: CategoryEvent;
   pools: ApiPool[];
-  matches: ApiMatch[];
+  eventId: string;
+  categoryId: string;
 }
 
-export function CategoryTabs({ category, pools, matches }: Props) {
+export function CategoryTabs({ category, pools, categoryId, eventId }: Props) {
   return (
-    <Tabs defaultValue="bracket" className="mb-8">
-      <TabsList className="grid grid-cols-3 w-full max-w-md">
+    <Tabs defaultValue="pools" className="mb-8">
+      <TabsList className="grid grid-cols-2 w-full max-w-md">
         <TabsTrigger value="bracket">Clasificación</TabsTrigger>
         <TabsTrigger value="pools">Grupos</TabsTrigger>
-        <TabsTrigger value="matches">Partidos</TabsTrigger>
+        {/* <TabsTrigger value="matches">Partidos</TabsTrigger> */}
       </TabsList>
 
       <TabsContent value="bracket" className="mt-6">
         <TabTableClasification category={category} />
       </TabsContent>
       <TabsContent value="pools" className="mt-6">
-        <PoolsTab pools={pools} />
+        <PoolsTab pools={pools} categoryId={categoryId} eventId={eventId} />
       </TabsContent>
-      <TabsContent value="matches" className="mt-6">
+      {/* <TabsContent value="matches" className="mt-6">
         <MatchesTab
           matches={matches}
           // matches={matches}
         />
-      </TabsContent>
+      </TabsContent> */}
     </Tabs>
   );
 }

@@ -47,6 +47,7 @@ export interface CategoryEvent {
   id: string;
   name: string;
   date: string;
+  status: string;
   location: string;
   entrants: number;
   format: string;

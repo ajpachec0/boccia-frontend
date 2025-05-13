@@ -7,15 +7,17 @@ interface EmptyCategoryProps {
   categoryName?: string;
   backUrl?: string;
   backLabel?: string;
+  withBackButton?: boolean;
 }
 
 export default function EmptyCategory({
   categoryName = "esta categoría",
   backUrl = "/eventos",
   backLabel = "Volver al inicio",
+  withBackButton = false,
 }: EmptyCategoryProps) {
   return (
-    <div className="container mx-auto py-16 px-4 text-center h-screen flex items-center justify-center">
+    <div className="container mx-auto py-8 px-4 text-center h-full flex items-center justify-center">
       <div className="flex flex-col items-center max-w-md mx-auto">
         <div className="bg-muted rounded-full p-6 mb-6">
           <FolderX className="h-12 w-12 text-muted-foreground" />
@@ -30,11 +32,13 @@ export default function EmptyCategory({
           vuelve a consultar más tarde.
         </p>
 
-        <Link href={backUrl}>
-          <Button variant="outline" className="mt-2">
-            <ChevronLeft className="mr-2 h-4 w-4" /> {backLabel}
-          </Button>
-        </Link>
+        {withBackButton && (
+          <Link href={backUrl}>
+            <Button variant="outline" className="mt-2">
+              <ChevronLeft className="mr-2 h-4 w-4" /> {backLabel}
+            </Button>
+          </Link>
+        )}
       </div>
     </div>
   );

@@ -3,7 +3,6 @@ import { CategoryHeader } from "@/components/category/category-header";
 import { CategoryInfoCard } from "@/components/category/category-infocard";
 import EmptyCategory from "@/components/common/empty-section";
 import { getGrupoByCategoryByEvent } from "@/server/grupos/get-grupo-by-category-by-event";
-import { getMatchesByGroupByCategoryByEvent } from "@/server/matches/get-matches-by-cateogry-by-event";
 import { CategoryEvent } from "@/types/categories-events.type";
 
 interface Props {
@@ -11,13 +10,7 @@ interface Props {
 }
 
 export default async function CategoryPage({ params }: Props) {
-  const category = getCategoryById(params.idcat) as CategoryEvent | undefined;
   const group = await getGrupoByCategoryByEvent(params.id, params.idcat);
-  const matches = await getMatchesByGroupByCategoryByEvent(
-    params.id,
-    params.idcat,
-    "5"
-  );
 
   if (!category) {
     return <EmptyCategory categoryName="esta categoría" />;
@@ -30,151 +23,146 @@ export default async function CategoryPage({ params }: Props) {
       <CategoryTabs
         category={category}
         pools={group}
-        matches={matches} // Pass the matches data to the MatchesTab
+        eventId={params.id}
+        categoryId={params.idcat}
       />
     </div>
   );
 }
 
-function getCategoryById(id: string) {
-  const brazilFlag = "https://flagcdn.com/w320/uy.png";
-  const colombiaFlag = "https://flagcdn.com/w320/co.png";
+const brazilFlag = "https://flagcdn.com/w320/uy.png";
+const colombiaFlag = "https://flagcdn.com/w320/co.png";
 
-  const allCategories = [
+const category: CategoryEvent = {
+  id: "1",
+  name: "BC1 Femenino",
+  entrants: 2,
+  status: "En curso",
+  date: "16 de Junio de 2025",
+  location: "San Salvador, El Salvador",
+  format: "Round Robin",
+  courts: [
+    { name: "Court 1", status: "Activo" },
+    { name: "Court 2", status: "En espera" },
+  ],
+  standings: [
     {
-      id: "1",
-      name: "BC1 Femenino",
-      entrants: 2,
-      status: "En curso",
-      date: "16 de Junio de 2025",
-      location: "San Salvador, El Salvador",
-      format: "Round Robin",
-      courts: [
-        { name: "Court 1", status: "Activo" },
-        { name: "Court 2", status: "En espera" },
-      ],
-      standings: [
+      id: "1101",
+      name: "BEATRIZ MARTA DAS CHAGAS",
+      country: "Uruguay",
+      flag: brazilFlag,
+      color: "#FFD700",
+      textColor: "#000000",
+    },
+    {
+      id: "1102",
+      name: "LUZ GENES",
+      country: "Colombia",
+      flag: colombiaFlag,
+      color: "#C0C0C0",
+      textColor: "#000000",
+    },
+    {
+      id: "NA",
+      name: "NA",
+      country: "",
+      flag: "",
+      color: "#CD7F32",
+      textColor: "#FFFFFF",
+    },
+  ],
+  pools: [
+    {
+      id: "pool-a",
+      name: "A",
+      players: [
         {
           id: "1101",
           name: "BEATRIZ MARTA DAS CHAGAS",
-          country: "Uruguay",
+          country: "Brasil",
           flag: brazilFlag,
-          color: "#FFD700",
-          textColor: "#000000",
+          stats: {
+            wins: 2,
+            pointsDiff: 3,
+            pointsFor: 8,
+            endsWon: 4,
+            pdiffMatch: 2,
+            pdiffEnd: 3,
+          },
+          vsRecord: {
+            "1102": 4,
+          },
         },
         {
           id: "1102",
           name: "LUZ GENES",
           country: "Colombia",
           flag: colombiaFlag,
-          color: "#C0C0C0",
-          textColor: "#000000",
-        },
-        {
-          id: "NA",
-          name: "NA",
-          country: "",
-          flag: "",
-          color: "#CD7F32",
-          textColor: "#FFFFFF",
+          stats: {
+            wins: 0,
+            pointsDiff: -3,
+            pointsFor: 5,
+            endsWon: 4,
+            pdiffMatch: 0,
+            pdiffEnd: 2,
+          },
+          vsRecord: {
+            "1101": -4,
+          },
         },
       ],
-      pools: [
+    },
+  ],
+  rounds: [
+    {
+      id: "round-1",
+      number: 1,
+      matches: [
         {
-          id: "pool-a",
-          name: "A",
+          id: "match-1",
           players: [
             {
               id: "1101",
               name: "BEATRIZ MARTA DAS CHAGAS",
               country: "Brasil",
               flag: brazilFlag,
-              stats: {
-                wins: 2,
-                pointsDiff: 3,
-                pointsFor: 8,
-                endsWon: 4,
-                pdiffMatch: 2,
-                pdiffEnd: 3,
-              },
-              vsRecord: {
-                "1102": 4,
-              },
+              score: 4,
             },
             {
               id: "1102",
               name: "LUZ GENES",
               country: "Colombia",
               flag: colombiaFlag,
-              stats: {
-                wins: 0,
-                pointsDiff: -3,
-                pointsFor: 5,
-                endsWon: 4,
-                pdiffMatch: 0,
-                pdiffEnd: 2,
-              },
-              vsRecord: {
-                "1101": -4,
-              },
-            },
-          ],
-        },
-      ],
-      rounds: [
-        {
-          id: "round-1",
-          number: 1,
-          matches: [
-            {
-              id: "match-1",
-              players: [
-                {
-                  id: "1101",
-                  name: "BEATRIZ MARTA DAS CHAGAS",
-                  country: "Brasil",
-                  flag: brazilFlag,
-                  score: 4,
-                },
-                {
-                  id: "1102",
-                  name: "LUZ GENES",
-                  country: "Colombia",
-                  flag: colombiaFlag,
-                  score: 3,
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: "round-2",
-          number: 2,
-          matches: [
-            {
-              id: "match-2",
-              players: [
-                {
-                  id: "1101",
-                  name: "BEATRIZ MARTA DAS CHAGAS",
-                  country: "Brasil",
-                  flag: brazilFlag,
-                  score: 4,
-                },
-                {
-                  id: "1102",
-                  name: "LUZ GENES",
-                  country: "Colombia",
-                  flag: colombiaFlag,
-                  score: 2,
-                },
-              ],
+              score: 3,
             },
           ],
         },
       ],
     },
-  ];
-
-  return allCategories.find((cat) => cat.id === id);
-}
+    {
+      id: "round-2",
+      number: 2,
+      matches: [
+        {
+          id: "match-2",
+          players: [
+            {
+              id: "1101",
+              name: "BEATRIZ MARTA DAS CHAGAS",
+              country: "Brasil",
+              flag: brazilFlag,
+              score: 4,
+            },
+            {
+              id: "1102",
+              name: "LUZ GENES",
+              country: "Colombia",
+              flag: colombiaFlag,
+              score: 2,
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};
