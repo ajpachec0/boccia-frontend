@@ -12,13 +12,16 @@ interface Props {
 export default async function CategoryPage({ params }: Props) {
   const group = await getGrupoByCategoryByEvent(params.id, params.idcat);
 
+  const categoryName =
+    group?.[0]?.jugadores?.[0]?.jugador?.categoria?.categoria;
+
   if (!category) {
     return <EmptyCategory categoryName="esta categoría" />;
   }
 
   return (
     <div className="container mx-auto py-6 px-4 max-w-7xl">
-      <CategoryHeader category={category} />
+      <CategoryHeader category={category} categoyName={categoryName} />
       <CategoryInfoCard category={category} />
       <CategoryTabs
         category={category}
@@ -35,7 +38,7 @@ const colombiaFlag = "https://flagcdn.com/w320/co.png";
 
 const category: CategoryEvent = {
   id: "1",
-  name: "BC1 Femenino",
+  name: "BC1",
   entrants: 2,
   status: "En curso",
   date: "16 de Junio de 2025",

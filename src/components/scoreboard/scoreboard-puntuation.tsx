@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { ArrowLeft } from "lucide-react";
+import { toast } from "sonner";
 
 const ENDS = 6;
 const BALLS_PER_END = 6;
@@ -122,6 +123,38 @@ export const ScoreboardPageComponent: React.FC<
     }
   };
 
+  const finishMatch = async () => {
+    const total1 = teams[0].score.reduce((sum, pts) => sum + pts, 0);
+    const total2 = teams[1].score.reduce((sum, pts) => sum + pts, 0);
+    const payload = {
+      puntosJugador1: total1,
+      puntosJugador2: total2,
+      jugado: true,
+      finalizado: true,
+    };
+    try {
+      const res = await fetch(`/api/scoreboard/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        toast.success("Partido finalizado");
+        router.back();
+      } else {
+        console.error("Error finishing match");
+      }
+    } catch (err) {
+      console.error("Error finishing match:", err);
+    }
+  };
+  // Handle click to finish match
+  const handleFinishMatch = () => {
+    finishMatch();
+    // Optionally navigate away or show a success message
+  };
+
   // Handle score changes locally and notify server
   const handleScoreChange = (playerIdx: number, delta: number) => {
     setTeams((prev) => {
@@ -143,6 +176,7 @@ export const ScoreboardPageComponent: React.FC<
     fetchScoreboard();
     const interval = setInterval(fetchScoreboard, POLL_INTERVAL_MS);
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const formatTime = (sec: number) => {
@@ -225,10 +259,14 @@ export const ScoreboardPageComponent: React.FC<
             </div>
           </div>
         ))}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="bg-black text-white w-20 h-20 flex items-center justify-center text-4xl rounded-full">
-            {currentEnd}
-          </div>
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-50">
+          <button
+            type="button"
+            onClick={handleFinishMatch}
+            className="pointer-events-auto bg-black text-white w-40 h-40 flex items-center justify-center text-2xl rounded-full"
+          >
+            Finalizar Partido
+          </button>
         </div>
       </div>
 

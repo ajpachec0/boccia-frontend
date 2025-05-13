@@ -21,7 +21,7 @@ interface ApiPlayerEntry {
   puntos?: number;
   puntosDif?: number;
   puntosFavor?: number;
-  ganador?: number;
+  ganados?: number;
 }
 
 export interface ApiPool {
@@ -37,83 +37,83 @@ interface Props {
 }
 
 export function PoolsTab({ pools, categoryId, eventId }: Props) {
-  // Valores por defecto para stats
-  const defaultStats = {
-    wins: 0,
-    pointsDiff: 0,
-    pointsFor: 0,
-    endsWon: 0,
-    pdiffMatch: 0,
-    pdiffEnd: 0,
-  };
+  // // Valores por defecto para stats
+  // const defaultStats = {
+  //   wins: 0,
+  //   pointsDiff: 0,
+  //   pointsFor: 0,
+  //   endsWon: 0,
+  //   pdiffMatch: 0,
+  //   pdiffEnd: 0,
+  // };
 
-  // Algunos ejemplos quemados para *dar variedad*, puedes ajustar
-  const burnedStats: Record<number, typeof defaultStats> = {
-    17: {
-      wins: 3,
-      pointsDiff: 24,
-      pointsFor: 26,
-      endsWon: 10,
-      pdiffMatch: 10,
-      pdiffEnd: 5,
-    },
-    18: {
-      wins: 2,
-      pointsDiff: -6,
-      pointsFor: 9,
-      endsWon: 5,
-      pdiffMatch: 3,
-      pdiffEnd: 3,
-    },
-    19: {
-      wins: 1,
-      pointsDiff: -6,
-      pointsFor: 10,
-      endsWon: 5,
-      pdiffMatch: 3,
-      pdiffEnd: 4,
-    },
-    20: {
-      wins: 0,
-      pointsDiff: -12,
-      pointsFor: 6,
-      endsWon: 4,
-      pdiffMatch: 0,
-      pdiffEnd: 2,
-    },
-    21: {
-      wins: 2,
-      pointsDiff: 5,
-      pointsFor: 12,
-      endsWon: 6,
-      pdiffMatch: 4,
-      pdiffEnd: 3,
-    },
-    22: {
-      wins: 1,
-      pointsDiff: -3,
-      pointsFor: 8,
-      endsWon: 5,
-      pdiffMatch: 2,
-      pdiffEnd: 1,
-    },
-    23: {
-      wins: 0,
-      pointsDiff: -10,
-      pointsFor: 4,
-      endsWon: 3,
-      pdiffMatch: 0,
-      pdiffEnd: 2,
-    },
-    24: {
-      wins: 3,
-      pointsDiff: 15,
-      pointsFor: 20,
-      endsWon: 8,
-      pdiffMatch: 6,
-      pdiffEnd: 4,
-    },
-  };
+  // // Algunos ejemplos quemados para *dar variedad*, puedes ajustar
+  // const burnedStats: Record<number, typeof defaultStats> = {
+  //   17: {
+  //     wins: 3,
+  //     pointsDiff: 24,
+  //     pointsFor: 26,
+  //     endsWon: 10,
+  //     pdiffMatch: 10,
+  //     pdiffEnd: 5,
+  //   },
+  //   18: {
+  //     wins: 2,
+  //     pointsDiff: -6,
+  //     pointsFor: 9,
+  //     endsWon: 5,
+  //     pdiffMatch: 3,
+  //     pdiffEnd: 3,
+  //   },
+  //   19: {
+  //     wins: 1,
+  //     pointsDiff: -6,
+  //     pointsFor: 10,
+  //     endsWon: 5,
+  //     pdiffMatch: 3,
+  //     pdiffEnd: 4,
+  //   },
+  //   20: {
+  //     wins: 0,
+  //     pointsDiff: -12,
+  //     pointsFor: 6,
+  //     endsWon: 4,
+  //     pdiffMatch: 0,
+  //     pdiffEnd: 2,
+  //   },
+  //   21: {
+  //     wins: 2,
+  //     pointsDiff: 5,
+  //     pointsFor: 12,
+  //     endsWon: 6,
+  //     pdiffMatch: 4,
+  //     pdiffEnd: 3,
+  //   },
+  //   22: {
+  //     wins: 1,
+  //     pointsDiff: -3,
+  //     pointsFor: 8,
+  //     endsWon: 5,
+  //     pdiffMatch: 2,
+  //     pdiffEnd: 1,
+  //   },
+  //   23: {
+  //     wins: 0,
+  //     pointsDiff: -10,
+  //     pointsFor: 4,
+  //     endsWon: 3,
+  //     pdiffMatch: 0,
+  //     pdiffEnd: 2,
+  //   },
+  //   24: {
+  //     wins: 3,
+  //     pointsDiff: 15,
+  //     pointsFor: 20,
+  //     endsWon: 8,
+  //     pdiffMatch: 6,
+  //     pdiffEnd: 4,
+  //   },
+  // };
 
   if (pools.length === 0) {
     return <EmptyCategory categoryName="Grupos" />;
@@ -155,14 +155,14 @@ export function PoolsTab({ pools, categoryId, eventId }: Props) {
                       POINTS FOR
                     </th>
                     <th className="py-3 px-2 text-center font-medium text-muted-foreground">
-                      ENDS WON
+                      POINTS
                     </th>
-                    <th className="py-3 px-2 text-center font-medium text-muted-foreground">
+                    {/* <th className="py-3 px-2 text-center font-medium text-muted-foreground">
                       PDIFF MATCH
                     </th>
                     <th className="py-3 px-2 text-center font-medium text-muted-foreground">
                       PDIFF END
-                    </th>
+                    </th> */}
                     <th
                       colSpan={pool.jugadores.length}
                       className="py-3 px-2 text-center font-medium text-muted-foreground"
@@ -172,7 +172,7 @@ export function PoolsTab({ pools, categoryId, eventId }: Props) {
                   </tr>
                   {/* Sub-encabezado con IDs */}
                   <tr className="border-b bg-muted/20">
-                    <th colSpan={8}></th>
+                    <th colSpan={6}></th>
                     {pool.jugadores.map((op) => (
                       <th
                         key={op.jugador.id}
@@ -186,7 +186,7 @@ export function PoolsTab({ pools, categoryId, eventId }: Props) {
                 <tbody>
                   {pool.jugadores.map((entry, idx) => {
                     // Obtenemos stats (quemados o por defecto)
-                    const stats = burnedStats[entry.jugador.id] ?? defaultStats;
+                    // const stats = burnedStats[entry.jugador.id] ?? defaultStats;
 
                     // Generamos un VS Record quemado para cada fila
                     const vsRecord = pool.jugadores.reduce<
@@ -218,23 +218,23 @@ export function PoolsTab({ pools, categoryId, eventId }: Props) {
                           </span>
                         </td>
                         <td className="py-3 px-2 text-center font-medium">
-                          {stats.wins}
+                          {entry.ganados}
                         </td>
                         <td className="py-3 px-2 text-center font-medium">
-                          {stats.pointsDiff}
+                          {entry.puntosDif}
                         </td>
                         <td className="py-3 px-2 text-center font-medium">
-                          {stats.pointsFor}
+                          {entry.puntosFavor}
                         </td>
                         <td className="py-3 px-2 text-center font-medium">
-                          {stats.endsWon}
+                          {entry.puntos}
                         </td>
-                        <td className="py-3 px-2 text-center font-medium">
-                          {stats.pdiffMatch}
+                        {/* <td className="py-3 px-2 text-center font-medium">
+                          {entry.puntos}
                         </td>
                         <td className="py-3 px-2 text-center font-medium">
                           {stats.pdiffEnd}
-                        </td>
+                        </td> */}
                         {/* VS Record dinámico */}
                         {pool.jugadores.map((op) => {
                           const val = vsRecord[op.jugador.id];

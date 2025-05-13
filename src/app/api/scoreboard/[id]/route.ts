@@ -35,8 +35,14 @@ export async function PUT(
 ) {
   const { id } = params;
   const payload = await req.json();
+  const body = {
+    ...payload,
+    finalizado: payload.finalizado || false,
+  };
+
   // Forward to external
-  const externalRes = await api.put(`/partido/${id}`, payload);
+  const externalRes = await api.put(`/partido/${id}`, body);
+
   const result = externalRes.data;
   // Update cache with fresh result
   matchCache.set(id, result);
